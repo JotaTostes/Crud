@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="crud.css" rel="stylesheet">
-    <script type="text/javascript" src="../jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
 
 </head>
 
@@ -34,32 +34,40 @@
             <button type="submit" id="enviar">Cadastrar</button>
             <br>
             <button id="fechaGridCadas">Fechar</button>
-        </div>
-        </fieldset>
-       
+    </div>
+    </fieldset>
 
+
+
+    <fieldset style="display:none" id="fieldEditaCadastro">
+        <legend>Editar Cadastro</legend>
         
-        <fieldset style="display:none" id="fieldEditaCadastro">
-            <legend>Editar Cadastro</legend>
-            <label for="">Editar Nome:  </label>
-            <input type="text" id="txtEditar">
-            <button type="submit" id="enviaEdicao">Editar</button>
-            <br>
-            <button id="fechaGridEdicao">Fechar</button>
-        </fieldset 
-
-
-        
-        <div>
-            <button id="deleta">Deletar</button>
-        </div>
-        <br><br>
-        <table id="tabelaNomes">
+        <label for="">Editar Nome:  </label>
+        <input type="text" id="txtEditar">
+        <button type="submit" id="enviaEdicao">Editar</button>
+        <br>
+        <button id="fechaGridEdicao">Fechar</button>
+    </fieldset>
+    
+    <br><br>
+    <fieldset id="fieldLista">
+        <legend>Lista de Cadastro</legend>
+        <table border="1" id="tabelaNomes">
+            <tr>
+                <td>Nome</td>
+                <td id="tdcpf">CPF</td>
+            </tr>
+                
+        </table>
+    </fieldset>
+    <!-- <table id="tabelaNomes">
             <tr>
                 <th>Nomes</th>
+                <br>
+                <th>CPF</th>
             </tr>
-        </table>
-        <script type="text/javascript" src="crud.js"></script>
+        </table> -->
+    <script type="text/javascript" src="crud.js"></script>
 </body>
 
 </html>

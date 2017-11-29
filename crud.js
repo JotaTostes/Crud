@@ -1,18 +1,26 @@
 $("#enviar").on("click", function () {
+    var localSt = localStorage.getItem(nome,cpf)
     var nome = $("#txtNome").val()
-    $("#tabelaNomes").append("<tr/><td>" + nome + "<td>")
+    var cpf = $("#cpf").val()
+    var tabela = $("#tabelaNomes")
+    cadastro = [];
+    
+     $("#tabelaNomes").append("<tr><td>" + nome + "</td>,<td>"+cpf+"</td><td><button>Excluir</button></td><td><button>Editar</button></td></tr>")
     // Adicionando no localStorage
-    localStorage.setItem('Nome', nome)
+
+    localStorage.setItem('Nome', nome , cpf)
     $("#txtNome").val("");
+    $("#cpf").val("")
 })
+ 
+
 $("#fechaGridCadas").on("click", function () {
     $("#fieldNovoCadastro").slideUp(200)
-
 })
+
 $("#fechaGridEdicao").on("click", function () {
     $("#fieldEditaCadastro").slideUp(200)
 })
-
 
 $("#novoCadas").click(function () {
     $("#fieldNovoCadastro").slideDown(200)
