@@ -1,0 +1,10 @@
+
+
+
+
+table {
+    border: 1px solid black;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 1px;
+}

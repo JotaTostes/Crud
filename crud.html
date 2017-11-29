@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="crud.css" rel="stylesheet">
+    <script type="text/javascript" src="../jquery-3.2.1.js"></script>
+
+</head>
+
+<body>
+
+
+    <fieldset id="fieldPrincip">
+        <legend>Pesquisa</legend>
+        <label for="">Insira o nome para pesquisa: </label>
+        <input type="text" id="txtBusca">
+        <button type="submit" id="busca">Buscar</button>
+        <br>
+        <input type="button" id="novoCadas" value="Novo">
+        <input type="button" id="editaCadas" value="Editar">
+    </fieldset>
+    <br><br>
+
+    <div>
+        <fieldset style="display:none" id="fieldNovoCadastro">
+            <legend>Novo Cadastro</legend>
+            <label for="">Insira um nome:  </label>
+            <input type="text" id="txtNome">
+            <label>Insira o CPF: </label>
+            <input type="text" id="cpf" maxlength="14">
+            <button type="submit" id="enviar">Cadastrar</button>
+            <br>
+            <button id="fechaGridCadas">Fechar</button>
+        </div>
+        </fieldset>
+       
+
+        
+        <fieldset style="display:none" id="fieldEditaCadastro">
+            <legend>Editar Cadastro</legend>
+            <label for="">Editar Nome:  </label>
+            <input type="text" id="txtEditar">
+            <button type="submit" id="enviaEdicao">Editar</button>
+            <br>
+            <button id="fechaGridEdicao">Fechar</button>
+        </fieldset 
+
+
+        
+        <div>
+            <button id="deleta">Deletar</button>
+        </div>
+        <br><br>
+        <table id="tabelaNomes">
+            <tr>
+                <th>Nomes</th>
+            </tr>
+        </table>
+        <script type="text/javascript" src="crud.js"></script>
+</body>
+
+</html>
