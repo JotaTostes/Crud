@@ -1,12 +1,16 @@
 $("#enviar").on("click", function () {
-    var localSt = localStorage.getItem(nome, cpf)
+    var localSt = localStorage.getItem(cadastros)
     var nome = $("#txtNome").val()
     var cpf = $("#cpf").val()
     var tabela = $("#tabelaNomes")
+    var cadastros = JSON.stringify({
+        Nome: $("#txtNome").val(),
+        CPF: $("#cpf").val()
+    });
+
     $("#tabelaNomes").append('<tr><td data-nome>' + nome + "</td><td data-cpf>" + cpf + "</td><td><button onclick='excluirTr(this)'>Excluir</button></td><td><button onclick='editaTr(this)'>Editar</button></td></tr>")
-    
     // Adicionando no localStorage
-    localStorage.setItem("Nome", nome)
+    localStorage.setItem("Cadastros", cadastros)
     $("#txtNome, #cpf").val("");
     $("#fieldNovoCadastro").slideUp(200);
 })
@@ -14,6 +18,7 @@ var textolegend = $("#legendField").text();
 
 function excluirTr(btnExcluitr) {
     $(btnExcluitr).closest('tr').remove();
+    localStorage.removeItem("Cadastros");
 }
 
 function editaTr(btnEditatr) {
@@ -32,10 +37,11 @@ function editaTr(btnEditatr) {
     })
 }
 function editaCadastro() {
+
     var tr = $(btnEditatr).closest('tr');
     var editaNome = tr.find("td[data-nome]").text();
     var editaCpf = tr.find("td[data-cpf]").text();
-    
+
 }
 
 $("#fechaGridCadas").on("click", function () {
