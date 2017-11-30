@@ -1,35 +1,57 @@
 $("#enviar").on("click", function () {
-    var localSt = localStorage.getItem(nome,cpf)
+    var localSt = localStorage.getItem(nome, cpf)
     var nome = $("#txtNome").val()
     var cpf = $("#cpf").val()
     var tabela = $("#tabelaNomes")
-    cadastro = [];
-    
-     $("#tabelaNomes").append("<tr><td>" + nome + "</td>,<td>"+cpf+"</td><td><button>Excluir</button></td><td><button>Editar</button></td></tr>")
+    $("#tabelaNomes").append('<tr><td data-nome>' + nome + "</td><td data-cpf>" + cpf + "</td><td><button onclick='excluirTr(this)'>Excluir</button></td><td><button onclick='editaTr(this)'>Editar</button></td></tr>")
     // Adicionando no localStorage
-
-    localStorage.setItem('Nome', nome , cpf)
-    $("#txtNome").val("");
-    $("#cpf").val("")
+    localStorage.setItem('Lista', tabela)
+    $("#txtNome, #cpf").val("");
+    $("#fieldNovoCadastro").slideUp(200);
 })
- 
+var textolegend = $("#legendField").text();
+
+function excluirTr(btnExcluitr) {
+    $(btnExcluitr).closest('tr').remove();
+}
+
+function editaTr(btnEditatr) {
+    var b = "Editar Cadastro";
+    $(btnEditatr).on("click", function () {
+        $("#fieldNovoCadastro").slideDown(200)
+        if (textolegend == "Novo Cadastro") {
+            $("#legendField").text(b)
+            textolegend = b;
+        }
+        var tr = $(btnEditatr).closest('tr');
+        var nome = tr.find("td[data-nome]").text();
+        var cpf = tr.find("td[data-cpf]").text();
+        $("#txtNome").val(nome);
+        $("#cpf").val(cpf);
+    })
+}
 
 $("#fechaGridCadas").on("click", function () {
-    $("#fieldNovoCadastro").slideUp(200)
+    $("#fieldNovoCadastro").slideUp(200);    
 })
 
 $("#fechaGridEdicao").on("click", function () {
-    $("#fieldEditaCadastro").slideUp(200)
+    $("#fieldEditaCadastro").slideUp(200);
+})
+
+$("#enviaEdicao").on("click", function () {
+    $("#fieldEditaCadastro").slideUp(200);
 })
 
 $("#novoCadas").click(function () {
-    $("#fieldNovoCadastro").slideDown(200)
+    var a = "Novo Cadastro";
+    if (textolegend == "Editar Cadastro") {
+        $("#legendField").text(a);
+        textolegend = a;
+    }
+    $("#txtNome, #cpf").val("");
+    $("#fieldNovoCadastro").slideDown(200);
 });
-
-$("#editaCadas").click(function () {
-    $("#fieldEditaCadastro").slideDown(200)
-})
-
 
 $("#editaCadas").on("click", function () {
     localStorage.removeItem('Nome');
