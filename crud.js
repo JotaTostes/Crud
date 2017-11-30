@@ -4,8 +4,9 @@ $("#enviar").on("click", function () {
     var cpf = $("#cpf").val()
     var tabela = $("#tabelaNomes")
     $("#tabelaNomes").append('<tr><td data-nome>' + nome + "</td><td data-cpf>" + cpf + "</td><td><button onclick='excluirTr(this)'>Excluir</button></td><td><button onclick='editaTr(this)'>Editar</button></td></tr>")
+    
     // Adicionando no localStorage
-    localStorage.setItem('Lista', tabela)
+    localStorage.setItem("Nome", nome)
     $("#txtNome, #cpf").val("");
     $("#fieldNovoCadastro").slideUp(200);
 })
@@ -24,24 +25,30 @@ function editaTr(btnEditatr) {
             textolegend = b;
         }
         var tr = $(btnEditatr).closest('tr');
-        var nome = tr.find("td[data-nome]").text();
-        var cpf = tr.find("td[data-cpf]").text();
-        $("#txtNome").val(nome);
-        $("#cpf").val(cpf);
+        var trnome = tr.find("td[data-nome]").text();
+        var trcpf = tr.find("td[data-cpf]").text();
+        $("#txtNome").val(trnome);
+        $("#cpf").val(trcpf);
     })
+}
+function editaCadastro() {
+    var tr = $(btnEditatr).closest('tr');
+    var editaNome = tr.find("td[data-nome]").text();
+    var editaCpf = tr.find("td[data-cpf]").text();
+    
 }
 
 $("#fechaGridCadas").on("click", function () {
-    $("#fieldNovoCadastro").slideUp(200);    
+    $("#fieldNovoCadastro").slideUp(200);
 })
 
 $("#fechaGridEdicao").on("click", function () {
     $("#fieldEditaCadastro").slideUp(200);
 })
 
-$("#enviaEdicao").on("click", function () {
-    $("#fieldEditaCadastro").slideUp(200);
-})
+// $("#enviaEdicao").on("click", function () {
+//     $("#fieldEditaCadastro").slideUp(200);
+// })
 
 $("#novoCadas").click(function () {
     var a = "Novo Cadastro";
@@ -63,6 +70,7 @@ $("#deleta").on("click", function () {
     localStorage.removeItem('NomeAtualizado')
 })
 
+// Daqui pra baixo é tudo referente a mascara do input de cpf
 $("#cpf").keyup(function () {
     mcpf($("#cpf").val());
 }).keydown(function (e) {
@@ -79,7 +87,6 @@ function mcpf(v) {
         $("#cpf").val($("#cpf").val().substr(0, 13));
         $("#cpf").keydown();
     }
-
     v = v.replace(/\D/g, "");
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
