@@ -1,48 +1,59 @@
+var textolegend = $("#legendField").text();
+var editaCadastro = "F";
+var trEdicao;
+
 $("#enviar").on("click", function () {
-    var localSt = localStorage.getItem(cadastros)
-    var nome = $("#txtNome").val()
-    var cpf = $("#cpf").val()
-    var tabela = $("#tabelaNomes")
-    var cadastros = JSON.stringify({
+    var localSt = localStorage.getItem(cadastro);
+    var nome = $("#txtNome").val();
+    var cpf = $("#cpf").val();
+    var tabela = $("#tabelaNomes");
+    var cadastro = JSON.stringify({
         Nome: $("#txtNome").val(),
         CPF: $("#cpf").val()
     });
 
-    $("#tabelaNomes").append('<tr><td data-nome>' + nome + "</td><td data-cpf>" + cpf + "</td><td><button onclick='excluirTr(this)'>Excluir</button></td><td><button onclick='editaTr(this)'>Editar</button></td></tr>")
+    var tr = $("<tr/>");
+    tr.append("<td data-nome>" + nome + "</td>");
+    tr.append("<td data-cpf>" + cpf + "</td>");
+    tr.append("<td><button data-remove>Excluir</button></td>");
+    tr.append('<td><button data-edit>Editar</button></td>');
+
+    if (!trEdicao) 
+        $("#tabelaNomes").append(tr);
+    else
+        trEdicao.html(tr.html());
+
     // Adicionando no localStorage
-    localStorage.setItem("Cadastros", cadastros)
+    localStorage.setItem("Cadastros", cadastro)
     $("#txtNome, #cpf").val("");
     $("#fieldNovoCadastro").slideUp(200);
+});
+
+$("#busca").on("click", function () {
+    $("#fieldPesquisa").slideDown(200);
+    console.log("teste");
+    $("tabelaNomes").find("td[data-nome]").text() == nome
+    $("#fieldPesquisa").append("<p>" + nome + "</p>")
 })
-var textolegend = $("#legendField").text();
 
-function excluirTr(btnExcluitr) {
-    $(btnExcluitr).closest('tr').remove();
+$("#tabelaNomes").on("click", "button[data-remove]", function() {
+    if (!confirm("Você deseja realmente excluir o registro?"))
+        return;
+    
+    $(this).closest('tr').remove();
     localStorage.removeItem("Cadastros");
-}
+});
 
-function editaTr(btnEditatr) {
-    var b = "Editar Cadastro";
-    $(btnEditatr).on("click", function () {
-        $("#fieldNovoCadastro").slideDown(200)
-        if (textolegend == "Novo Cadastro") {
-            $("#legendField").text(b)
-            textolegend = b;
-        }
-        var tr = $(btnEditatr).closest('tr');
-        var trnome = tr.find("td[data-nome]").text();
-        var trcpf = tr.find("td[data-cpf]").text();
-        $("#txtNome").val(trnome);
-        $("#cpf").val(trcpf);
-    })
-}
-function editaCadastro() {
-
-    var tr = $(btnEditatr).closest('tr');
-    var editaNome = tr.find("td[data-nome]").text();
-    var editaCpf = tr.find("td[data-cpf]").text();
-
-}
+$("#tabelaNomes").on("click", "button[data-edit]", function() {
+    editaCadastro = "T";
+    $("#fieldNovoCadastro").slideDown(200)
+    $("#legendField").text("Editar Cadastro")
+    trEdicao = $(this).closest('tr');
+    var trnome = trEdicao.find("td[data-nome]").text();
+    var trcpf = trEdicao.find("td[data-cpf]").text();
+    $("#txtNome").val(trnome);
+    $("#cpf").val(trcpf);
+});
 
 $("#fechaGridCadas").on("click", function () {
     $("#fieldNovoCadastro").slideUp(200);
@@ -52,29 +63,13 @@ $("#fechaGridEdicao").on("click", function () {
     $("#fieldEditaCadastro").slideUp(200);
 })
 
-// $("#enviaEdicao").on("click", function () {
-//     $("#fieldEditaCadastro").slideUp(200);
-// })
-
 $("#novoCadas").click(function () {
-    var a = "Novo Cadastro";
-    if (textolegend == "Editar Cadastro") {
-        $("#legendField").text(a);
-        textolegend = a;
-    }
+    trEdicao = null;
+    editaCadastro = "F";
+    $("#legendField").text("Novo Cadastro");
     $("#txtNome, #cpf").val("");
     $("#fieldNovoCadastro").slideDown(200);
 });
-
-$("#editaCadas").on("click", function () {
-    localStorage.removeItem('Nome');
-    var nomeAtualizado = $("#attNome").val();
-    var local = localStorage.setItem('NomeAtualizado', nomeAtualizado)
-})
-
-$("#deleta").on("click", function () {
-    localStorage.removeItem('NomeAtualizado')
-})
 
 // Daqui pra baixo é tudo referente a mascara do input de cpf
 $("#cpf").keyup(function () {

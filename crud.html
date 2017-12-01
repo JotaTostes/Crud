@@ -12,14 +12,16 @@
 
 <body>
 
-
     <fieldset id="fieldPrincip">
         <legend>Pesquisa</legend>
         <label for="">Insira o nome para pesquisa: </label>
         <input type="text" id="txtBusca">
         <button type="submit" id="busca">Buscar</button>
         <br>
-        <input type="button" id="novoCadas" value="Novo">
+        <input type="button" id="novoCadas" value="Novo Cadastro">
+        <fieldset style="display:none" id="fieldPesquisa">
+            <legend>Cadastro Pesquisado</legend>
+        </fieldset>
     </fieldset>
     <br><br>
 
@@ -55,6 +57,7 @@
             <tr>
                 <td>Nome</td>
                 <td id="tdcpf">CPF</td>
+                <td colspan="2"></td>
             </tr>
 
         </table>
