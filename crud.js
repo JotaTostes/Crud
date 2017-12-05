@@ -1,6 +1,7 @@
 var trEdicao;
 var nomeBuscado;
-var indice_selecionado = -1;
+var indice_selecionado = 0;
+var idbotao = -1;
 var localSt = localStorage.getItem("cadastro");
 localSt = JSON.parse(localSt);
 if (localSt == null)
@@ -8,11 +9,13 @@ if (localSt == null)
 
 // -------------- INSERIR CADASTRO ----------------
 $("#enviar").on("click", function () {
+
     var nome = $("#txtNome").val();
     var cpf = $("#cpf").val();
     var tabela = $("#tabelaNomes");
     // Cria obj e converte pra string para adicionar no local storage
     var cadastro = JSON.stringify({
+        ID: indice_selecionado++,
         Nome: $("#txtNome").val(),
         CPF: $("#cpf").val()
     });
@@ -21,8 +24,7 @@ $("#enviar").on("click", function () {
     tr.append("<td data-nome>" + nome + "</td>");
     tr.append("<td data-cpf>" + cpf + "</td>");
     tr.append("<td><button data-remove>Excluir</button></td>");
-    tr.append('<td><button data-edit>Editar</button></td>');
-
+    tr.append('<td><button data-edit id="' + idbotao + '">Editar</button></td>');
     // Verifico se esta editando ou inserindo novo cadastro
     if (!trEdicao) {
         $("#tabelaNomes").append(tr);
@@ -34,8 +36,6 @@ $("#enviar").on("click", function () {
     }
     else
         trEdicao.html(tr.html());
-
-
 });
 
 // ----------- BUSCA DE CADASTROS -------------
@@ -72,14 +72,23 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     var trcpf = trEdicao.find("td[data-cpf]").text();
     $("#txtNome").val(trnome);
     $("#cpf").val(trcpf);
-    // edita no localStorage
-    localSt[indice_selecionado] = JSON.stringify({
-        Nome: $("#txtNome").val(),
-        CPF: $("#cpf").val()
-    });//Altera o item selecionado na tabela
-    localStorage.setItem("tbCadastros", JSON.stringify(localSt));
-    return true;
+    cadastro.forEach(function (cadastro) {
+        cadastro = JSON.parse(cadastro)
+        var cadastro2 = cadastro;
+        console.log(cadastro2);
+        // if (JSON.parse(cadastro2.Nome) == trcpf)
+        //     cadastro.Nome = 
+    });
 });
+
+// edita no localStorage
+// localSt[indice_selecionado] = JSON.stringify({
+//     Nome: $("#txtNome").val(),
+//     CPF: $("#cpf").val()
+// });//Altera o item selecionado na tabela
+// localStorage.setItem("tbCadastros", JSON.stringify(localSt));
+// return true;
+
 
 // ---------- FECHA FIELDSET NOVO CADASTRO ------------
 $("#fechaGridCadas").on("click", function () {
@@ -91,6 +100,27 @@ $("#limpaForm").on("click", function () {
     $("#txtNome").val("");
 })
 
+// ----------- UPLOAD DE IMAGEM --------------
+
+$("#enviaImg").on("click", function () {
+    var imagem = $("#uplImg").imagem;
+    if (imagem.length > 0) {
+        getBase64(imagem[0]);
+    }
+    
+});
+
+function getBase64(imagem) {
+    var reader = new FileReader();
+    reader.readAsDataURL(imagem);
+    reader.onload = function () {
+        console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
 // ---------- FECHA FIELDSET DE EDIÇAO ------------
 $("#fechaGridEdicao").on("click", function () {
     $("#fieldEditaCadastro").slideUp(200);
@@ -98,6 +128,7 @@ $("#fechaGridEdicao").on("click", function () {
 
 // ------------ BOTÃO NOVO CADASTRO -------------
 $("#novoCadas").click(function () {
+    idbotao++;
     trEdicao = null;
     $("#legendField").text("Novo Cadastro");
     $("#legendPesquisa").text("Lista de Cadastros")
