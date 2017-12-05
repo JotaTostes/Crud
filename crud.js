@@ -1,51 +1,70 @@
-var textolegend = $("#legendField").text();
-var editaCadastro = "F";
 var trEdicao;
+var nomeBuscado;
+var indice_selecionado = -1;
+var localSt = localStorage.getItem("cadastro");
+localSt = JSON.parse(localSt);
+if (localSt == null)
+    localSt = [];
 
+// -------------- INSERIR CADASTRO ----------------
 $("#enviar").on("click", function () {
-    var localSt = localStorage.getItem(cadastro);
     var nome = $("#txtNome").val();
     var cpf = $("#cpf").val();
     var tabela = $("#tabelaNomes");
+    // Cria obj e converte pra string para adicionar no local storage
     var cadastro = JSON.stringify({
         Nome: $("#txtNome").val(),
         CPF: $("#cpf").val()
     });
-
+    // Criando tabela de cadastros
     var tr = $("<tr/>");
     tr.append("<td data-nome>" + nome + "</td>");
     tr.append("<td data-cpf>" + cpf + "</td>");
     tr.append("<td><button data-remove>Excluir</button></td>");
     tr.append('<td><button data-edit>Editar</button></td>');
 
-    if (!trEdicao) 
+    // Verifico se esta editando ou inserindo novo cadastro
+    if (!trEdicao) {
         $("#tabelaNomes").append(tr);
+        // Adicionando no localStorage
+        localSt.push(cadastro);
+        localStorage.setItem("tbCadastros", JSON.stringify(localSt));
+        $("#txtNome, #cpf").val("");
+        $("#fieldNovoCadastro").slideUp(200);
+    }
     else
         trEdicao.html(tr.html());
 
-    // Adicionando no localStorage
-    localStorage.setItem("Cadastros", cadastro)
-    $("#txtNome, #cpf").val("");
-    $("#fieldNovoCadastro").slideUp(200);
+
 });
 
+// ----------- BUSCA DE CADASTROS -------------
 $("#busca").on("click", function () {
-    $("#fieldPesquisa").slideDown(200);
-    console.log("teste");
-    $("tabelaNomes").find("td[data-nome]").text() == nome
-    $("#fieldPesquisa").append("<p>" + nome + "</p>")
-})
+    nomeBuscado = $("#txtBusca").val();
+    var tabela = $("#tabelaNomes");
+    var pesquinome = $("#tabelaNomes").find("td[data-nome]").text();
+    $("#legendPesquisa").text("Cadastro Pesquisado")
+    $('#tabelaNomes tr').each(function () {
+        // linha
+        var tr = $(this)
+        if ($(this).find('td:eq(0)').text() != nomeBuscado) {
+            tr.hide();
+        }
+    });
+});
 
-$("#tabelaNomes").on("click", "button[data-remove]", function() {
+// ----------- REMOVE CADASTROS --------------
+$("#tabelaNomes").on("click", "button[data-remove]", function () {
     if (!confirm("Você deseja realmente excluir o registro?"))
         return;
-    
+
     $(this).closest('tr').remove();
-    localStorage.removeItem("Cadastros");
+    localSt.splice(indice_selecionado, 1);
+    localStorage.setItem("tbCadastros", JSON.stringify(localSt));
 });
 
-$("#tabelaNomes").on("click", "button[data-edit]", function() {
-    editaCadastro = "T";
+// -------------- EDITA CADASTROS ----------------
+$("#tabelaNomes").on("click", "button[data-edit]", function () {
     $("#fieldNovoCadastro").slideDown(200)
     $("#legendField").text("Editar Cadastro")
     trEdicao = $(this).closest('tr');
@@ -53,20 +72,35 @@ $("#tabelaNomes").on("click", "button[data-edit]", function() {
     var trcpf = trEdicao.find("td[data-cpf]").text();
     $("#txtNome").val(trnome);
     $("#cpf").val(trcpf);
+    // edita no localStorage
+    localSt[indice_selecionado] = JSON.stringify({
+        Nome: $("#txtNome").val(),
+        CPF: $("#cpf").val()
+    });//Altera o item selecionado na tabela
+    localStorage.setItem("tbCadastros", JSON.stringify(localSt));
+    return true;
 });
 
+// ---------- FECHA FIELDSET NOVO CADASTRO ------------
 $("#fechaGridCadas").on("click", function () {
     $("#fieldNovoCadastro").slideUp(200);
 })
 
+$("#limpaForm").on("click", function () {
+    $("#txtBusca").val("");
+    $("#txtNome").val("");
+})
+
+// ---------- FECHA FIELDSET DE EDIÇAO ------------
 $("#fechaGridEdicao").on("click", function () {
     $("#fieldEditaCadastro").slideUp(200);
 })
 
+// ------------ BOTÃO NOVO CADASTRO -------------
 $("#novoCadas").click(function () {
     trEdicao = null;
-    editaCadastro = "F";
     $("#legendField").text("Novo Cadastro");
+    $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
     $("#fieldNovoCadastro").slideDown(200);
 });
