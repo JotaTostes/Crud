@@ -50,7 +50,8 @@ $("#enviar").on("click", function () {
 
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
-                $("#txtNome, #cpf").val("");
+                $("#txtNome, #cpf, #uplImg").val("");
+                $("#exibeImg").attr('src', );
             }
             catch (e) {
                 console.log("Falha ao salvar no localStorage: " + e);
@@ -61,23 +62,22 @@ $("#enviar").on("click", function () {
         alert("Informe uma imagem!");
 });
 
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#exibeImg').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 // preview imagem
-// $("#uplImg").on('change', function () {
-
-//     if (typeof (FileReader) != "undefined") {
-//         var image_holder = $("#exibeImg");
-//         image_holder.empty();
-
-//         var reader = new FileReader();
-//         reader.onload = function (e) {
-//             $("<img/>", {
-//                 "src": e.target.result,
-//             }).appendTo(image_holder);
-//         }
-//         image_holder.show();
-//         reader.readAsDataURL($(this)[0].files[0]);
-//     } 
-// });
+$("#uplImg").on('change', function () {
+    readURL(this);
+});
 
 // ----------- BUSCA DE CADASTROS -------------
 $("#busca").on("click", function () {
@@ -93,7 +93,6 @@ $("#busca").on("click", function () {
         }
     });
 });
-
 // ----------- BOTÃO REMOVE CADASTROS --------------
 $("#tabelaNomes").on("click", "button[data-remove]", function () {
     if (!confirm("Você deseja realmente excluir o registro?"))
@@ -130,6 +129,7 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
 
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
+    $("#exibeImg").show();
 
 })
 
@@ -141,8 +141,11 @@ $("#fechaGridCadas").on("click", function () {
 $("#limpaForm").on("click", function () {
     $("#txtBusca").val("");
     $("#txtNome").val("");
+    localStorage.clear(localSt);
+    location.reload();
 })
 
+//----------- CONVERTE IMG EM BASE64 ---------------
 function getBase64(file, callback) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
@@ -168,6 +171,10 @@ $("#novoCadas").click(function () {
     $("#legendField").text("Novo Cadastro");
     $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
+    if ($("#exibeImg").val() == null) {
+        
+    }
+    // $("#exibeImg").hide();
     $("#fieldNovoCadastro").slideDown(200);
 });
 
