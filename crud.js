@@ -130,7 +130,6 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
     $("#exibeImg").show();
-
 })
 
 // ---------- FECHA FIELDSET NOVO CADASTRO ------------
@@ -171,9 +170,7 @@ $("#novoCadas").click(function () {
     $("#legendField").text("Novo Cadastro");
     $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
-    if ($("#exibeImg").val() == null) {
-        
-    }
+    $("#exibeImg").removeAttr('src'); 
     // $("#exibeImg").hide();
     $("#fieldNovoCadastro").slideDown(200);
 });
