@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+                      <!-- PESQUISA -->
     <fieldset id="fieldPrincip">
         <legend>Pesquisa</legend>
         <label for="">Insira o nome para pesquisa: </label>
@@ -20,19 +20,10 @@
         <br>
         <input type="button" id="novoCadas" value="Novo Cadastro">
         <input type="button" id="limpaForm" value="Limpar Formulario">
-        <!-- <fieldset style="display:none" id="fieldPesquisa">
-            <legend>Cadastro Pesquisado</legend>
-            <table border="1" id="tabelaNomePesqui">
-                <tr>
-                    <td>Nome</td>
-                    <td>CPF</td>
-                    <td colspan="2"></td>
-                </tr>
-            </table>
-        </fieldset> -->
     </fieldset>
     <br><br>
 
+                      <!-- CADASTRO  -->
     <div>
         <fieldset style="display:none" id="fieldNovoCadastro">
             <legend id="legendField">Novo Cadastro</legend>
@@ -43,24 +34,14 @@
             <button type="submit" id="enviar">Salvar</button>
             <br>
             <button id="fechaGridCadas">Fechar</button>
-            <input type="file" id="uplImg" class="btn btn-success" multiple/>
-            <input type="button" id="enviaImg" value="Enviar Imagem">
+            <input type="file" id="uplImg" multiple/>
+            <img id="exibeImg" class="resizeImg">
     </div>
     </fieldset>
 
-
-
-    <!-- <fieldset style="display:none" id="fieldEditaCadastro">
-        <legend>Editar Cadastro</legend>
-
-        <label for="">Editar Nome:  </label>
-        <input type="text" id="txtEditar">
-        <button type="submit" id="enviaEdicao">Editar</button>
-        <br>
-        <button id="fechaGridEdicao">Fechar</button>
-    </fieldset> -->
-
     <br><br>
+
+                           <!-- LISTA -->
     <fieldset id="fieldLista">
         <legend id="legendPesquisa">Lista de Cadastro</legend>
         <table border="1" id="tabelaNomes">
@@ -71,16 +52,10 @@
             </tr>
         </table>
     </fieldset>
-    <!-- <table id="tabelaNomes">
-            <tr>
-                <th>Nomes</th>
-                <br>
-                <th>CPF</th>
-            </tr>
-        </table> -->
+
+    
     <script type="text/javascript" src="crud.js"></script>
 </body>
-
 </html>
 
 
@@ -88,5 +63,5 @@
 
 
 <!-- 
-Arrumar localStorage
+setar variavel pra false
 -->
