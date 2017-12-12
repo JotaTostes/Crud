@@ -32,10 +32,12 @@
             <label>Insira o CPF: </label>
             <input type="text" id="cpf" maxlength="14">
             <button type="submit" id="enviar">Salvar</button>
-            <br>
+            <br><br>
             <button id="fechaGridCadas">Fechar</button>
             <input type="file" id="uplImg" multiple/>
-            <img id="exibeImg" class="resizeImg">
+            <div id="divImg">
+                <img id="exibeImg" class="resizeImg">
+            </div>
     </div>
     </fieldset>
 
@@ -51,8 +53,9 @@
                 <th colspan="2"></th>
             </tr>
         </table>
-        <img id="imgPesquisa" class="resizeImg" style="display: none ">
+        <img id="imgPesquisa">
     </fieldset>
+
 
 
     <script type="text/javascript" src="crud.js"></script>

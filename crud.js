@@ -2,10 +2,12 @@ var trEdicao;
 var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
+$("#imgPesquisa").hide();
 
 localSt = JSON.parse(localSt);
 if (localSt == null)
     localSt = [];
+
 
 var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
@@ -62,19 +64,18 @@ $("#enviar").on("click", function () {
         alert("Informe uma imagem!");
 });
 
+// ------------ PREVIEW DA IMAGEM ----------------
 function readURL(input) {
-
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
             $('#exibeImg').attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }
-// preview imagem
+
 $("#uplImg").on('change', function () {
     readURL(this);
 });
@@ -83,13 +84,17 @@ $("#uplImg").on('change', function () {
 $("#busca").on("click", function () {
     nomeBuscado = $("#txtBusca").val();
     var tabela = $("#tabelaNomes");
-    var pesquinome = $("#tabelaNomes").find("td[data-nome]").text();
+    var obj = localSt.filter(function (item) {
+        return item.Nome == nomeBuscado;
+    })[0];
+    console.log(obj);
     $("#legendPesquisa").text("Cadastro Pesquisado")
     $('#tabelaNomes tr').each(function () {
         // linha
         var tr = $(this)
         if ($(this).find('td:eq(0)').text() != nomeBuscado) {
             tr.hide();
+            $("#imgPesquisa").attr('src', obj.IMG).show();
         }
     });
 });
@@ -99,14 +104,15 @@ $("#tabelaNomes").on("click", "button[data-remove]", function () {
         return;
 
     var tr = $(this).closest('tr'),
-        id = tr.attr("data-id");
+        id = tr.attr("data-id"); 0,
 
-    localSt = localSt.filter(function (obj) {
-        return obj.ID != id;
-    });
+            localSt = localSt.filter(function (obj) {
+                return obj.ID != id;
+            });
 
     localStorage.setItem("tbCadastros", JSON.stringify(localSt));
     tr.remove();
+    $("#imgPesquisa").removeAttr('src')
 });
 
 // -------------- BOTÃO EDITA CADASTROS ----------------
@@ -124,7 +130,7 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     }
 
     if (!obj) {
-        console.log("Não achei o cara pra editar");
+        console.log("Cadastro nao encontrado para edição");
     }
 
     $("#txtNome").val(obj.Nome);
@@ -170,21 +176,22 @@ $("#novoCadas").click(function () {
     $("#legendField").text("Novo Cadastro");
     $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
-    $("#exibeImg").removeAttr('src'); 
+    $("#exibeImg").removeAttr('src');
+    $("#imgPesquisa").hide();
     // $("#exibeImg").hide();
     $("#fieldNovoCadastro").slideDown(200);
 });
 
 // Daqui pra baixo é tudo referente a mascara do input de cpf
 $("#cpf").keyup(function () {
-    mcpf($("#cpf").val());
-}).keydown(function (e) {
-    if (e.which == 109 || e.which == 107 || e.which == 69 || e.which == 189 || e.which == 188 || e.which == 190)
-        return false;
-    mcpf($("#cpf").val());
-}).on("blur", function () {
-    mcpf($("#cpf").val());
-});
+        mcpf($("#cpf").val());
+    }).keydown(function (e) {
+        if (e.which == 109 || e.which == 107 || e.which == 69 || e.which == 189 || e.which == 188 || e.which == 190)
+            return false;
+        mcpf($("#cpf").val());
+    }).on("blur", function () {
+        mcpf($("#cpf").val());
+    });
 
 function mcpf(v) {
     //retirando caracteres a mais do campo

@@ -9,4 +9,17 @@ table {
 .resizeImg{
     width: 200px;
     height: 200px;
+    margin-left: 20%;
 }
+
+ #imgPesquisa{
+        width: 200px;
+        height: 200px;
+ }
+
+ #tabelaNomes tr:nth-child(odd) {
+    background-color:#fff;
+  }  
+ #tabelaNomes tr:nth-child(even) {
+    background-color:#ccc;
+  } 
