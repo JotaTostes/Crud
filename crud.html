@@ -5,6 +5,7 @@
     <title>CRUD</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="crud.css" rel="stylesheet">
     <script type="text/javascript" src="jquery-3.2.1.js"></script>
 
@@ -16,10 +17,10 @@
         <legend class="legends">Pesquisa</legend>
         <label for="">Insira o nome para pesquisa: </label>
         <input type="text" id="txtBusca" placeholder="Pesquise um Nome" required>
-        <button type="submit" id="busca">Buscar</button>
+        <button type="submit" id="busca" class="buttons">Buscar</button>
         <br>
-        <input type="button" id="novoCadas" value="Novo Cadastro">
-        <input type="button" id="limpaForm" value="Limpar Tudo">
+        <input type="button" id="novoCadas" value="Novo Cadastro" class="buttons">
+        <input type="button" id="limpaForm" value="Limpar Tudo" class="buttons">
     </fieldset>
     <br><br>
 
@@ -31,9 +32,9 @@
             <input type="text" id="txtNome" maxlength="20" placeholder="Insira um Nome">
             <label>Insira o CPF: </label>
             <input type="text" id="cpf" maxlength="14" placeholder="Insira o CPF">
-            <button type="submit" id="enviar">Salvar</button>
+            <button type="submit" id="enviar" class="buttons">Salvar</button>
             <br><br>
-            <button id="fechaGridCadas">Fechar</button>
+            <button id="fechaGridCadas" class="buttons">Fechar</button>
             <input type="file" id="uplImg" multiple/>
             <div id="divImg">
                 <img id="exibeImg" class="resizeImg">
@@ -46,8 +47,8 @@
     <!-- LISTA -->
     <fieldset id="fieldLista" class="fields">
         <legend id="legendPesquisa" class="legends">Lista de Cadastro</legend>
-        <table border="1" id="tabelaNomes">
-            <tr>
+        <table border="1" id="tabelaNomes" class="w3-table-al">
+            <tr >
                 <th>Nome</th>
                 <th id="tdcpf">CPF</th>
                 <th colspan="2"></th>

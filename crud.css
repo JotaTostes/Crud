@@ -18,10 +18,10 @@ table {
  }
 
  #tabelaNomes tr:nth-child(odd) {
-    background-color:#fff;
+    background-color:#EDEDED;
   }  
  #tabelaNomes tr:nth-child(even) {
-    background-color:#ccc;
+    background-color:#ED806E;
   } 
 
   .fields{
@@ -29,8 +29,9 @@ table {
   }
   .legends{
       font-weight: 1000;
+      font-family: sans-serif;
   }
 
-  body{
-      background-color: rgba(235, 235, 235, 0.88);
+  .buttons{
+    font-weight: 700;
   }

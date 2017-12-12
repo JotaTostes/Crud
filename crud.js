@@ -12,8 +12,8 @@ var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
     tr.append("<td>" + obj.Nome + "</td>");
     tr.append("<td>" + obj.CPF + "</td>");
-    tr.append("<td><button data-remove>Excluir</button></td>");
-    tr.append('<td><button data-edit>Editar</button></td>');
+    tr.append("<td><button data-remove class='buttons'>Excluir</button></td>");
+    tr.append("<td><button data-edit class='buttons'>Editar</button></td>");
     return tr;
 };
 
