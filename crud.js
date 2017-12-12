@@ -8,7 +8,6 @@ localSt = JSON.parse(localSt);
 if (localSt == null)
     localSt = [];
 
-
 var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
     tr.append("<td>" + obj.Nome + "</td>");
@@ -87,16 +86,20 @@ $("#busca").on("click", function () {
     var obj = localSt.filter(function (item) {
         return item.Nome == nomeBuscado;
     })[0];
-    console.log(obj);
     $("#legendPesquisa").text("Cadastro Pesquisado")
-    $('#tabelaNomes tr').each(function () {
-        // linha
-        var tr = $(this)
-        if ($(this).find('td:eq(0)').text() != nomeBuscado) {
-            tr.hide();
-            $("#imgPesquisa").attr('src', obj.IMG).show();
-        }
-    });
+    try {
+        $('#tabelaNomes tr').each(function () {
+            // linha
+            var tr = $(this)
+            if ($(this).find('td:eq(0)').text() != nomeBuscado) {
+                tr.hide();
+                $("#imgPesquisa").attr('src', obj.IMG).show();
+            }
+        });
+    } catch (e) {
+        alert("Falha ao tentar pesquisar um cadastro!")
+        location.reload();
+    }
 });
 // ----------- BOTÃO REMOVE CADASTROS --------------
 $("#tabelaNomes").on("click", "button[data-remove]", function () {
@@ -184,14 +187,14 @@ $("#novoCadas").click(function () {
 
 // Daqui pra baixo é tudo referente a mascara do input de cpf
 $("#cpf").keyup(function () {
-        mcpf($("#cpf").val());
-    }).keydown(function (e) {
-        if (e.which == 109 || e.which == 107 || e.which == 69 || e.which == 189 || e.which == 188 || e.which == 190)
-            return false;
-        mcpf($("#cpf").val());
-    }).on("blur", function () {
-        mcpf($("#cpf").val());
-    });
+    mcpf($("#cpf").val());
+}).keydown(function (e) {
+    if (e.which == 109 || e.which == 107 || e.which == 69 || e.which == 189 || e.which == 188 || e.which == 190)
+        return false;
+    mcpf($("#cpf").val());
+}).on("blur", function () {
+    mcpf($("#cpf").val());
+});
 
 function mcpf(v) {
     //retirando caracteres a mais do campo

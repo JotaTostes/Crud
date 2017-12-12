@@ -12,10 +12,10 @@
 
 <body>
     <!-- PESQUISA -->
-    <fieldset id="fieldPrincip">
-        <legend>Pesquisa</legend>
+    <fieldset id="fieldPrincip" class="fields">
+        <legend class="legends">Pesquisa</legend>
         <label for="">Insira o nome para pesquisa: </label>
-        <input type="text" id="txtBusca">
+        <input type="text" id="txtBusca" placeholder="Pesquise um Nome" required>
         <button type="submit" id="busca">Buscar</button>
         <br>
         <input type="button" id="novoCadas" value="Novo Cadastro">
@@ -25,12 +25,12 @@
 
     <!-- CADASTRO  -->
     <div>
-        <fieldset style="display:none" id="fieldNovoCadastro">
-            <legend id="legendField">Novo Cadastro</legend>
+        <fieldset style="display:none" id="fieldNovoCadastro" class="fields">
+            <legend id="legendField" class="legends">Novo Cadastro</legend>
             <label for="">Insira um nome:  </label>
-            <input type="text" id="txtNome" maxlength="20">
+            <input type="text" id="txtNome" maxlength="20" placeholder="Insira um Nome">
             <label>Insira o CPF: </label>
-            <input type="text" id="cpf" maxlength="14">
+            <input type="text" id="cpf" maxlength="14" placeholder="Insira o CPF">
             <button type="submit" id="enviar">Salvar</button>
             <br><br>
             <button id="fechaGridCadas">Fechar</button>
@@ -44,8 +44,8 @@
     <br><br>
 
     <!-- LISTA -->
-    <fieldset id="fieldLista">
-        <legend id="legendPesquisa">Lista de Cadastro</legend>
+    <fieldset id="fieldLista" class="fields">
+        <legend id="legendPesquisa" class="legends">Lista de Cadastro</legend>
         <table border="1" id="tabelaNomes">
             <tr>
                 <th>Nome</th>
