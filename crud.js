@@ -188,7 +188,7 @@ $("#novoCadas").click(function () {
     $("#fieldNovoCadastro").slideDown(200);
 });
 
-// Daqui pra baixo é tudo referente a mascara do input de cpf
+//-------------------- AREA DE MASCARAS DE INPUTS ----------------------
 $("#cpf").keyup(function () {
     mcpf($("#cpf").val());
 }).keydown(function (e) {
@@ -211,3 +211,29 @@ function mcpf(v) {
     v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     $("#cpf").val(v);
 }
+
+function mascara(o, f) {
+    v_obj = o
+    v_fun = f
+    setTimeout("execmascara()", 1)
+}
+function execmascara() {
+    v_obj.value = v_fun(v_obj.value)
+}
+function soLetras(v) {
+    return v.replace(/\d/g, "") //Remove tudo o que não é Letra
+}
+//--------------------- MASCARAS NÃO UTILIZADAS -----------------
+// function soLetrasMA(v) {
+//     v = v.toUpperCase() //Maiúsculas
+//     return v.replace(/\d/g, "") //Remove tudo o que não é Letra ->maiusculas
+// }
+// function soLetrasMI(v) {
+//     v = v.toLowerCase() //Minusculas
+//     return v.replace(/\d/g, "") //Remove tudo o que não é Letra ->minusculas
+// }
+// function soNumeros(v) {
+//     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
+// }function soNumeros(v) {
+//     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
+// }
