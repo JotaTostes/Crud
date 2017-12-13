@@ -85,7 +85,7 @@ $("#busca").on("click", function () {
     var tabela = $("#tabelaNomes");
     var obj = localSt.filter(function (item) {
         return item.Nome == nomeBuscado;
-    })[0];
+    })[0, 1];
     $("#legendPesquisa").text("Cadastro Pesquisado")
     try {
         $('#tabelaNomes tr').each(function () {
@@ -153,7 +153,7 @@ $("#limpaForm").on("click", function () {
     location.reload();
 })
 
-//----------- CONVERTE IMG EM BASE64 ---------------
+//----------- FUNÇAO CONVERTE IMG EM BASE64 ---------------
 function getBase64(file, callback) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
