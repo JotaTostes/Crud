@@ -2,7 +2,6 @@ var trEdicao;
 var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
-$("#imgPesquisa").hide();
 
 localSt = JSON.parse(localSt);
 if (localSt == null)
@@ -14,6 +13,7 @@ var geraTr = function (obj) {
     tr.append("<td>" + obj.CPF + "</td>");
     tr.append("<td><button data-remove class='buttons'>Excluir</button></td>");
     tr.append("<td><button data-edit class='buttons'>Editar</button></td>");
+    tr.append("<td><img src='" + obj.IMG + "' class='resizeImgLista'></td>")
     return tr;
 };
 
@@ -38,6 +38,8 @@ $("#enviar").on("click", function () {
                     localSt.push(obj);
                     localStorage.index = indice_selecionado + 1;
                     $("#tabelaNomes").append(tr);
+                    $("#exibeImgTabela").attr('src', obj.IMG)
+                    location.reload(true);
                 } else {
                     localSt = localSt.map(function (item) {
                         if (item.ID == obj.ID) {
@@ -47,15 +49,16 @@ $("#enviar").on("click", function () {
                         return item;
                     });
                     trEdicao.html(tr.html());
+
                 }
 
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
                 $("#txtNome, #cpf, #uplImg").val("");
-                $("#exibeImg").attr('src', );
+                // $("#exibeImg").attr('src', );
             }
             catch (e) {
-                console.log("Falha ao salvar no localStorage: " + e);
+                alert("Falha ao salvar no localStorage: " + e);
             }
         });
     }
@@ -93,7 +96,6 @@ $("#busca").on("click", function () {
             var tr = $(this)
             if ($(this).find('td:eq(0)').text() != nomeBuscado) {
                 tr.hide();
-                $("#imgPesquisa").attr('src', obj.IMG).show();
             }
         });
     } catch (e) {
@@ -115,7 +117,10 @@ $("#tabelaNomes").on("click", "button[data-remove]", function () {
 
     localStorage.setItem("tbCadastros", JSON.stringify(localSt));
     tr.remove();
-    $("#imgPesquisa").removeAttr('src')
+    $("#exibeImg").removeAttr('src')
+    $("#txtNome").val("");
+    $("#cpf").val("");
+    $("#fieldNovoCadastro").slideUp(200);
 });
 
 // -------------- BOTÃO EDITA CADASTROS ----------------
@@ -180,8 +185,6 @@ $("#novoCadas").click(function () {
     $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
     $("#exibeImg").removeAttr('src');
-    $("#imgPesquisa").hide();
-    // $("#exibeImg").hide();
     $("#fieldNovoCadastro").slideDown(200);
 });
 
