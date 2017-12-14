@@ -49,9 +49,8 @@ $("#enviar").on("click", function () {
                         return item;
                     });
                     trEdicao.html(tr.html());
-
+                    location.reload(true);
                 }
-
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
                 $("#txtNome, #cpf, #uplImg").val("");
@@ -77,7 +76,6 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
 $("#uplImg").on('change', function () {
     readURL(this);
 });
@@ -89,6 +87,10 @@ $("#busca").on("click", function () {
     var obj = localSt.filter(function (item) {
         return item.Nome == nomeBuscado;
     })[0, 1];
+    if (nomeBuscado == "") {
+        alert("Nenhum cadastro pesquisado !")
+        location.reload(true);
+    }
     $("#legendPesquisa").text("Cadastro Pesquisado")
     try {
         $('#tabelaNomes tr').each(function () {
@@ -103,6 +105,7 @@ $("#busca").on("click", function () {
         location.reload();
     }
 });
+
 // ----------- BOTÃO REMOVE CADASTROS --------------
 $("#tabelaNomes").on("click", "button[data-remove]", function () {
     if (!confirm("Você deseja realmente excluir o registro?"))
@@ -140,7 +143,6 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     if (!obj) {
         console.log("Cadastro nao encontrado para edição");
     }
-
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
     $("#exibeImg").show();
