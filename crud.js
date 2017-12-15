@@ -2,6 +2,9 @@ var trEdicao;
 var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
+var status = "Ativo";
+var genero = "Selecione"
+
 
 localSt = JSON.parse(localSt);
 if (localSt == null)
@@ -11,6 +14,8 @@ var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
     tr.append("<td>" + obj.Nome + "</td>");
     tr.append("<td>" + obj.CPF + "</td>");
+    tr.append("<td>" + obj.Sexo + "</td>")
+    tr.append("<td data-status>" + obj.Status + "</td>")
     tr.append("<td><button data-remove class='buttons'>Excluir</button></td>");
     tr.append("<td><button data-edit class='buttons'>Editar</button></td>");
     tr.append("<td><img src='" + obj.IMG + "' class='resizeImgLista'></td>")
@@ -25,12 +30,13 @@ $("#enviar").on("click", function () {
     var obj = {
         ID: trEdicao ? +trEdicao.attr("data-id") : ++indice_selecionado,
         Nome: $("#txtNome").val(),
-        CPF: $("#cpf").val()
+        CPF: $("#cpf").val(),
+        Status: status,
+        Sexo: genero
     };
-
     var tr = geraTr(obj);
     var files = $("#uplImg")[0].files;
-    if (files.length > 0) {
+    if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") && ($("#comboGenero").find(':selected').text() != "Selecione")) {
         getBase64(files[0], function (url) {
             try {
                 obj.IMG = url;
@@ -61,8 +67,8 @@ $("#enviar").on("click", function () {
             }
         });
     }
-    else
-        alert("Informe uma imagem!");
+    else 
+        alert("Alguns campos obrigatórios nao foram preenchidos!!")
 });
 
 // ------------ PREVIEW DA IMAGEM ----------------
@@ -190,6 +196,27 @@ $("#novoCadas").click(function () {
     $("#fieldNovoCadastro").slideDown(200);
 });
 
+// ------------------- RADIO BUTTONS -------------------
+
+$("#radioAtivo").on('click', function () {
+    status = "Ativo";
+    $("#radioInativo").prop("checked", false)
+});
+
+$("#radioInativo").on("click", function () {
+    status = "Inativo";
+    $("#radioAtivo").prop("checked", false)
+});
+
+// ------------------ COMBOBOX -----------------------
+$("#comboGenero").change(function () {
+    genero = $('#comboGenero').find(":selected").text();
+});
+// // .val() pega o valor do combo
+// $("#comboGenero").find(':selected').val()
+// //.text() pega o texto do combo
+// genero = $('#comboGenero').find(":selected").text();
+
 //-------------------- AREA DE MASCARAS DE INPUTS ----------------------
 $("#cpf").keyup(function () {
     mcpf($("#cpf").val());
@@ -239,3 +266,7 @@ function soLetras(v) {
 // }function soNumeros(v) {
 //     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
 // }
+
+
+
+// && $("#txtNomes").val() || $("#cpf").val() != "") || ($("#comboGenero").find(':selected').val() != "Selecione")
