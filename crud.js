@@ -2,9 +2,8 @@ var trEdicao;
 var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
-var status = "Ativo";
-var genero = "Selecione"
-
+var status;
+var genero;
 
 localSt = JSON.parse(localSt);
 if (localSt == null)
@@ -21,7 +20,6 @@ var geraTr = function (obj) {
     tr.append("<td><img src='" + obj.IMG + "' class='resizeImgLista'></td>")
     return tr;
 };
-
 for (var i = 0; i < localSt.length; i++)
     $("#tabelaNomes").append(geraTr(localSt[i]));
 
@@ -32,10 +30,11 @@ $("#enviar").on("click", function () {
         Nome: $("#txtNome").val(),
         CPF: $("#cpf").val(),
         Status: status,
-        Sexo: genero
+        Sexo: genero,
     };
     var tr = geraTr(obj);
     var files = $("#uplImg")[0].files;
+    var caminho = $("#uplImg").val();
     if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") && ($("#comboGenero").find(':selected').text() != "Selecione")) {
         getBase64(files[0], function (url) {
             try {
@@ -49,7 +48,6 @@ $("#enviar").on("click", function () {
                 } else {
                     localSt = localSt.map(function (item) {
                         if (item.ID == obj.ID) {
-                            console.log("Editei!", obj);
                             return obj;
                         }
                         return item;
@@ -67,7 +65,7 @@ $("#enviar").on("click", function () {
             }
         });
     }
-    else 
+    else
         alert("Alguns campos obrigatórios nao foram preenchidos!!")
 });
 
@@ -144,6 +142,7 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
         })[0];
     if (id == obj.ID) {
         $("#exibeImg").attr('src', obj.IMG);
+        // $('#comboGenero option[value=]').attr('selected','selected');
     }
 
     if (!obj) {
