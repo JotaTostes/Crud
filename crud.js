@@ -59,7 +59,6 @@ $("#enviar").on("click", function () {
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
                 $("#txtNome, #cpf, #uplImg").val("");
-                // $("#exibeImg").attr('src', );
             }
             catch (e) {
                 alert("Falha ao salvar no localStorage: " + e);
@@ -144,7 +143,6 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
 
     if (id == obj.ID) {
         $("#exibeImg").attr('src', obj.IMG);
-        // $('#comboGenero option[value=]').attr('selected','selected');
         if (obj.Sexo == 1) {
             genero = 1
             $("#comboGenero option[value=1]").prop('selected', true);
@@ -284,7 +282,3 @@ function soLetras(v) {
 // }function soNumeros(v) {
 //     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
 // }
-
-
-
-// && $("#txtNomes").val() || $("#cpf").val() != "") || ($("#comboGenero").find(':selected').val() != "Selecione")
