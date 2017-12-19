@@ -13,11 +13,11 @@ var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
     tr.append("<td>" + obj.Nome + "</td>");
     tr.append("<td>" + obj.CPF + "</td>");
-    tr.append("<td>" + obj.Sexo + "</td>")
-    tr.append("<td data-status>" + obj.Status + "</td>")
+    tr.append("<td data-genero>" + obj.Sexo + "</td>");
+    tr.append("<td data-status>" + obj.Status + "</td>");
     tr.append("<td><button data-remove class='buttons'>Excluir</button></td>");
     tr.append("<td><button data-edit class='buttons'>Editar</button></td>");
-    tr.append("<td><img src='" + obj.IMG + "' class='resizeImgLista'></td>")
+    tr.append("<td><img src='" + obj.IMG + "' class='resizeImgLista'></td>");
     return tr;
 };
 for (var i = 0; i < localSt.length; i++)
@@ -32,10 +32,12 @@ $("#enviar").on("click", function () {
         Status: status,
         Sexo: genero,
     };
+
     var tr = geraTr(obj);
     var files = $("#uplImg")[0].files;
     var caminho = $("#uplImg").val();
-    if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") && ($("#comboGenero").find(':selected').text() != "Selecione")) {
+    if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") && 
+        ($("#comboGenero").find(':selected').val() != "X") && ($("#radioAtivo").is(":checked") || $("#radioInativo").is(":checked"))) {
         getBase64(files[0], function (url) {
             try {
                 obj.IMG = url;
@@ -46,6 +48,7 @@ $("#enviar").on("click", function () {
                     $("#exibeImgTabela").attr('src', obj.IMG)
                     location.reload(true);
                 } else {
+                    debugger;
                     localSt = localSt.map(function (item) {
                         if (item.ID == obj.ID) {
                             return obj;
@@ -58,6 +61,7 @@ $("#enviar").on("click", function () {
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
                 $("#txtNome, #cpf, #uplImg").val("");
+                
                 // $("#exibeImg").attr('src', );
             }
             catch (e) {
@@ -140,9 +144,25 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
         obj = localSt.filter(function (item) {
             return item.ID == id;
         })[0];
+
     if (id == obj.ID) {
         $("#exibeImg").attr('src', obj.IMG);
         // $('#comboGenero option[value=]').attr('selected','selected');
+        if (obj.Sexo == "Homem")
+            $("#comboGenero option[value=1]").prop('selected', true);
+        else if (obj.Sexo == "Mulher")
+            $("#comboGenero option[value=2]").prop('selected', true);
+        else
+            $("#comboGenero option[value=3]").prop('selected', true);
+
+        if (obj.Status == "Inativo") {
+            $("#radioInativo").prop("checked", true);
+            $("#radioAtivo").prop("checked", false);
+        }
+        else {
+            $("#radioAtivo").prop("checked", true);
+            $("#radioInativo").prop("checked", false);
+        }
     }
 
     if (!obj) {
@@ -150,6 +170,7 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     }
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
+    // $("#comboGenero").val(obj.Sexo);
     $("#exibeImg").show();
 })
 
@@ -180,11 +201,6 @@ function getBase64(file, callback) {
     };
 }
 
-// ---------- FECHA FIELDSET DE EDIÇAO ------------
-$("#fechaGridEdicao").on("click", function () {
-    $("#fieldEditaCadastro").slideUp(200);
-})
-
 // ------------ BOTÃO NOVO CADASTRO -------------
 $("#novoCadas").click(function () {
     trEdicao = null;
@@ -192,24 +208,25 @@ $("#novoCadas").click(function () {
     $("#legendPesquisa").text("Lista de Cadastros")
     $("#txtNome, #cpf").val("");
     $("#exibeImg").removeAttr('src');
+    $("#radioInativo, #radioAtivo").prop("checked", false)
     $("#fieldNovoCadastro").slideDown(200);
 });
 
 // ------------------- RADIO BUTTONS -------------------
 
 $("#radioAtivo").on('click', function () {
-    status = "Ativo";
+    status = 0;
     $("#radioInativo").prop("checked", false)
 });
 
 $("#radioInativo").on("click", function () {
-    status = "Inativo";
+    status = 1;
     $("#radioAtivo").prop("checked", false)
 });
 
 // ------------------ COMBOBOX -----------------------
 $("#comboGenero").change(function () {
-    genero = $('#comboGenero').find(":selected").text();
+    genero = $('#comboGenero').find(":selected").val();
 });
 // // .val() pega o valor do combo
 // $("#comboGenero").find(':selected').val()
