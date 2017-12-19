@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="crud.css" rel="stylesheet">
     <script type="text/javascript" src="jquery-3.2.1.js"></script>
-
 </head>
-
 <body>
+
     <!-- PESQUISA -->
     <fieldset id="fieldPrincip" class="fields">
         <legend class="legends">Pesquisa</legend>
@@ -38,14 +37,12 @@
                 <legend class="legends">Informações do Usuario</legend>
                 <div>
                     <label class="legends">Status do Usuario: </label>
-                    <input type="radio" name="status" value="0" id="radioAtivo" required>Ativo
-                    <input type="radio" name="status" value="1" id="radioInativo" required>Inativo<br>
+                    <input type="radio" name="status" value="1" id="radioAtivo" checked required><label for="radioAtivo">Ativo</label>
+                    <input type="radio" name="status" value="0" id="radioInativo" required><label for="radioInativo">Inativo</label><br>
                     <label class="legends">Sexo: </label>
                     <select id="comboGenero" required>
-                    <option value="X">Selecione</option>
                       <option value="1">Homem</option>
                       <option value="2">Mulher</option>
-                      <option value="3">Outros</option>
                     </select>
                 </div>
             </fieldset>
@@ -57,9 +54,8 @@
             <button id="fechaGridCadas" class="buttons">Fechar</button>
     </div>
     </fieldset>
-
     <br><br>
-
+    
     <!-- LISTA -->
     <fieldset id="fieldLista" class="fields">
         <legend id="legendPesquisa" class="legends">Lista de Cadastro</legend>
@@ -72,11 +68,7 @@
                 <th colspan="3"></th>
             </tr>
         </table>
-
     </fieldset>
-
-
-
     <script type="text/javascript" src="crud.js"></script>
 </body>
 
