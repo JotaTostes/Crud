@@ -13,7 +13,7 @@ var geraTr = function (obj) {
     var tr = $('<tr data-id="' + obj.ID + '"/>');
     tr.append("<td>" + obj.Nome + "</td>");
     tr.append("<td>" + obj.CPF + "</td>");
-    tr.append("<td data-genero>" + obj.Sexo + "</td>");
+    tr.append("<td data-genero>" + obj.Sexo + " </td>");
     tr.append("<td data-status>" + obj.Status + "</td>");
     tr.append("<td><button data-remove class='buttons'>Excluir</button></td>");
     tr.append("<td><button data-edit class='buttons'>Editar</button></td>");
@@ -32,11 +32,10 @@ $("#enviar").on("click", function () {
         Status: status,
         Sexo: genero,
     };
-
     var tr = geraTr(obj);
     var files = $("#uplImg")[0].files;
     var caminho = $("#uplImg").val();
-    if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") && 
+    if ((files.length > 0 && $("#txtNomes").val() != "") && ($("#cpf").val() != "") &&
         ($("#comboGenero").find(':selected').val() != "X") && ($("#radioAtivo").is(":checked") || $("#radioInativo").is(":checked"))) {
         getBase64(files[0], function (url) {
             try {
@@ -48,7 +47,6 @@ $("#enviar").on("click", function () {
                     $("#exibeImgTabela").attr('src', obj.IMG)
                     location.reload(true);
                 } else {
-                    debugger;
                     localSt = localSt.map(function (item) {
                         if (item.ID == obj.ID) {
                             return obj;
@@ -61,7 +59,6 @@ $("#enviar").on("click", function () {
                 localStorage.setItem("tbCadastros", JSON.stringify(localSt));
                 $("#fieldNovoCadastro").slideUp(200);
                 $("#txtNome, #cpf, #uplImg").val("");
-                
                 // $("#exibeImg").attr('src', );
             }
             catch (e) {
@@ -148,18 +145,26 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     if (id == obj.ID) {
         $("#exibeImg").attr('src', obj.IMG);
         // $('#comboGenero option[value=]').attr('selected','selected');
-        if (obj.Sexo == "Homem")
+        if (obj.Sexo == 1) {
+            genero = 1
             $("#comboGenero option[value=1]").prop('selected', true);
-        else if (obj.Sexo == "Mulher")
+        }
+        else if (obj.Sexo == 2) {
+            genero = 2
             $("#comboGenero option[value=2]").prop('selected', true);
-        else
+        }
+        else {
+            genero = 3
             $("#comboGenero option[value=3]").prop('selected', true);
+        }
 
-        if (obj.Status == "Inativo") {
+        if (obj.Status == 1) {
+            status = 1
             $("#radioInativo").prop("checked", true);
             $("#radioAtivo").prop("checked", false);
         }
         else {
+            status = 0
             $("#radioAtivo").prop("checked", true);
             $("#radioInativo").prop("checked", false);
         }
@@ -170,7 +175,6 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
     }
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
-    // $("#comboGenero").val(obj.Sexo);
     $("#exibeImg").show();
 })
 
@@ -215,12 +219,12 @@ $("#novoCadas").click(function () {
 // ------------------- RADIO BUTTONS -------------------
 
 $("#radioAtivo").on('click', function () {
-    status = 0;
+    status = 0
     $("#radioInativo").prop("checked", false)
 });
 
 $("#radioInativo").on("click", function () {
-    status = 1;
+    status = 1
     $("#radioAtivo").prop("checked", false)
 });
 
@@ -228,10 +232,8 @@ $("#radioInativo").on("click", function () {
 $("#comboGenero").change(function () {
     genero = $('#comboGenero').find(":selected").val();
 });
-// // .val() pega o valor do combo
-// $("#comboGenero").find(':selected').val()
-// //.text() pega o texto do combo
-// genero = $('#comboGenero').find(":selected").text();
+// .val() pega o valor do combo
+//.text() pega o texto do combo
 
 //-------------------- AREA DE MASCARAS DE INPUTS ----------------------
 $("#cpf").keyup(function () {
