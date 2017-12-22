@@ -60,3 +60,13 @@ table {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
+  #txtBusca{
+    background-image: url('search.png'); /* Adiciona imagem no input */
+    background-position: 10px 12px; /* Posiciona a imagem no canto */
+    background-repeat: no-repeat; /*Imagem do backgroud nao se repete */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid black; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}

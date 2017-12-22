@@ -2,7 +2,7 @@ var trEdicao;
 var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
-
+var obj;
 localSt = JSON.parse(localSt);
 if (localSt == null)
     localSt = [];
@@ -21,34 +21,39 @@ var geraTr = function (obj) {
 for (var i = 0; i < localSt.length; i++)
     $("#tabelaNomes").append(geraTr(localSt[i]));
 
-
 // -------------- INSERIR CADASTRO ----------------
 $("#enviar").on("click", function () {
-    var obj = {
+    obj = {
         ID: trEdicao ? +trEdicao.attr("data-id") : ++indice_selecionado,
         Nome: $("#txtNome").val().trim(),
         CPF: $("#cpf").val(),
         Status: $(":radio[name=status]:checked").val(),
         Sexo: $("#comboGenero").val(),
     };
-
     var files = $("#uplImg")[0].files;
-    if (!files.length || !obj.Nome || !obj.CPF || !obj.Sexo || !obj.Status) {
+    if (!obj.Nome || !obj.CPF || !obj.Sexo || !obj.Status) {
         alert("Alguns campos obrigatórios nao foram preenchidos!!");
         return;
     }
+    if (!files.length)
+        setBase64($("#baseImg").val(), inseriEdita);
+    else
+        getBase64(files[0], inseriEdita);
+});
 
-    getBase64(files[0], function (url) {
-        try {
-            obj.IMG = url;
+function inseriEdita(url) {
+    try {
+        if (url == null) {
+            obj.IMG = $("#baseImg").val();
             var tr = geraTr(obj);
             if (!trEdicao) {
                 localSt.push(obj);
                 localStorage.index = indice_selecionado + 1;
                 $("#tabelaNomes").append(tr);
-                $("#exibeImgTabela").attr('src', obj.IMG)   
+                $("#exibeImgTabela").attr('src', obj.IMG)
                 location.reload(true);
             } else {
+                files = url
                 localSt = localSt.map(function (item) {
                     if (item.ID == obj.ID)
                         return obj;
@@ -57,21 +62,38 @@ $("#enviar").on("click", function () {
                 trEdicao.html(tr.html());
                 location.reload(true);
             }
-            localStorage.setItem("tbCadastros", JSON.stringify(localSt));
-            $("#fieldNovoCadastro").slideUp(200);
-            $("#txtNome, #cpf, #uplImg").val("");
-        } catch (e) {
-            alert("Falha ao salvar no localStorage: " + e);
+        } else {
+            obj.IMG = url;
+            var tr = geraTr(obj);
+            if (!trEdicao) {
+                localSt.push(obj);
+                localStorage.index = indice_selecionado + 1;
+                $("#tabelaNomes").append(tr);
+                $("#exibeImgTabela").attr('src', obj.IMG)
+                location.reload(true);
+            } else {
+                files = url
+                localSt = localSt.map(function (item) {
+                    if (item.ID == obj.ID)
+                        return obj;
+                    return item;
+                });
+                trEdicao.html(tr.html());
+                location.reload(true);
+            }
         }
-        
-    });
-});
+        localStorage.setItem("tbCadastros", JSON.stringify(localSt));
+        $("#fieldNovoCadastro").slideUp(200);
+        $("#txtNome, #cpf, #uplImg").val("");
+    } catch (e) {
+        alert("Falha ao salvar no localStorage: " + e);
+    }
+}
 
 // ------------ PREVIEW DA IMAGEM ----------------
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
             $('#exibeImg').attr('src', e.target.result);
         };
@@ -83,30 +105,27 @@ $("#uplImg").on('change', function () {
 });
 
 // ----------- BUSCA DE CADASTROS -------------
-$("#busca").on("click", function () {
-    nomeBuscado = $("#txtBusca").val();
-    var tabela = $("#tabelaNomes");
-    var obj = localSt.filter(function (item) {
-        return item.Nome == nomeBuscado;
-    })[0, 1];
-    if (nomeBuscado == "") {
-        alert("Nenhum cadastro pesquisado !")
-        location.reload(true);
-    }
-    $("#legendPesquisa").text("Cadastro Pesquisado")
-    try {
-        $('#tabelaNomes tr').each(function () {
-            // linha
-            var tr = $(this)
-            if ($(this).find('td:eq(0)').text() != nomeBuscado) {
-                tr.hide();
+function buscaCadastro() {
+    // Variaveis 
+    var td, i,
+        txtBuscado = $("#txtBusca").val(),
+        filter = txtBuscado.toLowerCase(),
+        tabela = document.getElementById("tabelaNomes"),
+        tr = tabela.getElementsByTagName("tr");
+
+    // Faz um loop nas tr's da tabela e esconde as que nao batem com o filter
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+      
+        if (td) {
+            if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
             }
-        });
-    } catch (e) {
-        alert("Falha ao tentar pesquisar um cadastro!")
-        location.reload();
+        }
     }
-});
+}
 
 // ----------- BOTÃO REMOVE CADASTROS --------------
 $("#tabelaNomes").on("click", "button[data-remove]", function () {
@@ -123,9 +142,10 @@ $("#tabelaNomes").on("click", "button[data-remove]", function () {
     localStorage.setItem("tbCadastros", JSON.stringify(localSt));
     tr.remove();
     $("#exibeImg").removeAttr('src')
-    $("#txtNome").val("");
+    $("#txtNome,#txtBusca").val("");
     $("#cpf").val("");
     $("#fieldNovoCadastro").slideUp(200);
+    location.reload(true)
 });
 
 // -------------- BOTÃO EDITA CADASTROS ----------------
@@ -139,31 +159,33 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
             return item.ID == id;
         })[0];
 
+    $("#baseImg").val(obj.IMG);
+
     if (id == obj.ID) {
         $("#exibeImg").attr('src', obj.IMG);
         $("#comboGenero").val(obj.Sexo);
         $(":radio[name=status][value=" + obj.Status + "]").prop("checked", true);
     }
-    
+
     if (!obj) {
         console.log("Cadastro nao encontrado para edição");
     }
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
     $("#exibeImg").show();
-})
+});
 
 // ---------- FECHA FIELDSET NOVO CADASTRO ------------
 $("#fechaGridCadas").on("click", function () {
     $("#fieldNovoCadastro").slideUp(200);
-})
+});
 
 $("#limpaForm").on("click", function () {
     $("#txtBusca").val("");
     $("#txtNome").val("");
     localStorage.clear(localSt);
     location.reload();
-})
+});
 
 //----------- FUNÇAO CONVERTE IMG EM BASE64 ---------------
 function getBase64(file, callback) {
@@ -178,7 +200,12 @@ function getBase64(file, callback) {
     reader.onerror = function (error) {
         console.log('Error: ', error);
     };
-}
+};
+
+function setBase64(file, callback) {
+    $("#exibeImg").attr('src', file);
+    callback();
+};
 
 // ------------ BOTÃO NOVO CADASTRO -------------
 $("#novoCadas").click(function () {
@@ -191,6 +218,8 @@ $("#novoCadas").click(function () {
     $("#comboGenero").val(1);
     $("#fieldNovoCadastro").slideDown(200);
 });
+
+
 // .val() pega o valor do combo
 //.text() pega o texto do combo
 
