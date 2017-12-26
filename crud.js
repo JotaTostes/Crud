@@ -104,7 +104,7 @@ $("#uplImg").on('change', function () {
     readURL(this);
 });
 
-// ----------- BUSCA DE CADASTROS -------------
+// ----------- PESQUISA DE CADASTROS -------------
 function buscaCadastro() {
     // Variaveis 
     var td, i,
@@ -112,15 +112,16 @@ function buscaCadastro() {
         filter = txtBuscado.toLowerCase(),
         tabela = document.getElementById("tabelaNomes"),
         tr = tabela.getElementsByTagName("tr");
-
+        
+        
     // Faz um loop nas tr's da tabela e esconde as que nao batem com o filter
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
-      
         if (td) {
             if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
-            } else {
+            }
+            else {
                 tr[i].style.display = "none";
             }
         }
@@ -271,4 +272,29 @@ function soLetras(v) {
 //     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
 // }function soNumeros(v) {
 //     return v.replace(/\D/g, "") //Remove tudo o que não é dígito
+// }
+
+
+// function removeAcentos(str) {
+//     var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+//     var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+//     str = str.split('');
+//     var strLen = str.length;
+//     var i, x;
+//     for (i = 0; i < strLen; i++) {
+//         if ((x = accents.indexOf(str[i])) != -1) {
+//             str[i] = accentsOut[x];
+//         }
+//     }
+//     return str.join('');
+// }
+
+// function removeAcentos(text){                                                                   
+//     text = text.replace(new RegExp('[ÁÀÂÃ][áàâã]','gi'), 'a');
+//     text = text.replace(new RegExp('[ÉÈÊ][éèê]','gi'), 'e');
+//     text = text.replace(new RegExp('[ÍÌÎ][íìî]','gi'), 'i');
+//     text = text.replace(new RegExp('[ÓÒÔÕ][óòôõ]','gi'), 'o');
+//     text = text.replace(new RegExp('[ÚÙÛ][úùû]','gi'), 'u');
+//     text = text.replace(new RegExp('[Ç][ç]','gi'), 'c');
+//     return text;                 
 // }
