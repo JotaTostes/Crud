@@ -70,3 +70,34 @@ table {
     border: 1px solid black; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
 }
+
+@keyframes rotateX {
+  0% {-webkit-transform: rotateX(0deg); }
+  50% {  }
+  100% {-webkit-transform: rotateX(360deg); }
+}
+
+@keyframes rotateY {
+  0% {-webkit-transform: rotateY(0deg); }
+  50% {  }
+  100% {-webkit-transform: rotateY(360deg); }
+}
+
+@keyframes rotateZ {
+  0% {-webkit-transform: rotateZ(0deg); }
+  50% {  }
+  100% {-webkit-transform: rotateZ(360deg); }
+}
+
+.rotateX {
+  animation: rotateX 1s linear;
+}
+
+.rotateY {
+  animation: rotateY 1s linear;
+}
+
+.rotateZ {
+  animation: rotateZ 1s linear;
+}
+

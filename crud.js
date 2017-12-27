@@ -3,6 +3,7 @@ var nomeBuscado;
 var indice_selecionado = +localStorage.index || 0;
 var localSt = localStorage.getItem("tbCadastros");
 var obj;
+var bla = true
 localSt = JSON.parse(localSt);
 if (localSt == null)
     localSt = [];
@@ -108,12 +109,13 @@ $("#uplImg").on('change', function () {
 function buscaCadastro() {
     // Variaveis 
     var td, i,
+
         txtBuscado = $("#txtBusca").val(),
         filter = txtBuscado.toLowerCase(),
         tabela = document.getElementById("tabelaNomes"),
         tr = tabela.getElementsByTagName("tr");
-        
-        
+
+
     // Faz um loop nas tr's da tabela e esconde as que nao batem com o filter
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
@@ -275,26 +277,91 @@ function soLetras(v) {
 // }
 
 
+
+function RemoveAccents(strAccents) {
+    var strAccents = strAccents.split('');
+    var strAccentsOut = new Array();
+    var strAccentsLen = strAccents.length;
+    var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    for (var y = 0; y < strAccentsLen; y++) {
+        if (accents.indexOf(strAccents[y]) != -1) {
+            strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+        } else {
+            strAccentsOut[y] = strAccents[y];
+        }
+    }
+    strAccentsOut = strAccentsOut.join('');
+    console.log(strAccentsOut);
+    return strAccentsOut;
+}
+
+// --------------------- Adicionando shortcuts com biblioteca -------------------------
+// shortcut.add("Ctrl+X", function () {
+//     if (!$("body").hasClass("rotateX"))
+//         $("body").addClass("rotateX")
+
+//     setTimeout(function () {
+//         $("body").removeClass("rotateX");
+//     }, 1000);
+// });
+
+// shortcut.add("Ctrl+Y", function () {
+//     if (!$("body").hasClass("rotateY"))
+//         $("body").addClass("rotateY")
+
+//     setTimeout(function () {
+//         $("body").removeClass("rotateY");
+//     }, 1000);
+// });
+
+// shortcut.add("Ctrl+Z", function () {
+//     if (!$("body").hasClass("rotateZ"))
+//         $("body").addClass("rotateZ")
+
+//     setTimeout(function () {
+//         $("body").removeClass("rotateZ");
+//     }, 1000);
+// });
+
+// ------------------------ Adicionando shortcuts com javascript -----------------------------
+document.onkeydown = function (e) {
+    var e = e || window.event;
+    if ((e.ctrlKey && e.which == 88) && (!$("body").hasClass("rotateX"))) {
+        $("body").addClass('rotateX')
+        setTimeout(function () {
+            $("body").removeClass("rotateX");
+        }, 1000);
+        return false;
+    }  
+    
+    if ((e.ctrlKey && e.which == 89) && (!$("body").hasClass("rotateY"))) {
+        $("body").addClass('rotateY')
+        setTimeout(function () {
+            $("body").removeClass("rotateY");
+        }, 1000);
+        return false;
+    }
+
+    if ((e.ctrlKey && e.which == 90) && (!$("body").hasClass("rotateZ"))) {
+        $("body").addClass('rotateZ')
+        setTimeout(function () {
+            $("body").removeClass("rotateZ");
+        }, 1000);
+        return false;
+    }   
+}
+
 // function removeAcentos(str) {
 //     var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
 //     var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
 //     str = str.split('');
 //     var strLen = str.length;
-//     var i, x;
+//     var i, x;''
 //     for (i = 0; i < strLen; i++) {
 //         if ((x = accents.indexOf(str[i])) != -1) {
 //             str[i] = accentsOut[x];
 //         }
-//     }
+//     }       
 //     return str.join('');
-// }
-
-// function removeAcentos(text){                                                                   
-//     text = text.replace(new RegExp('[ÁÀÂÃ][áàâã]','gi'), 'a');
-//     text = text.replace(new RegExp('[ÉÈÊ][éèê]','gi'), 'e');
-//     text = text.replace(new RegExp('[ÍÌÎ][íìî]','gi'), 'i');
-//     text = text.replace(new RegExp('[ÓÒÔÕ][óòôõ]','gi'), 'o');
-//     text = text.replace(new RegExp('[ÚÙÛ][úùû]','gi'), 'u');
-//     text = text.replace(new RegExp('[Ç][ç]','gi'), 'c');
-//     return text;                 
 // }

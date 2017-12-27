@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="crud.css" rel="stylesheet">
     <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="shortcuts.js"></script>
 </head>
 <body>
 
     <!-- PESQUISA -->
     <fieldset id="fieldPrincip" class="fields">
         <legend class="legends">Pesquisa</legend>
-        <input type="text" id="txtBusca" placeholder="Pesquise um nome" required  onkeyup="buscaCadastro()"  onkeypress="mascara(this,soLetras)">
+        <input type="text" id="txtBusca" placeholder="Pesquise um nome" required  onkeyup="buscaCadastro();" onkeypress="mascara(this,soLetras);">
         <br>
         <input type="button" id="novoCadas" value="Novo Cadastro" class="buttons">
         <input type="button" id="limpaForm" value="Limpar Tudo" class="buttons">
@@ -26,7 +27,7 @@
         <fieldset style="display:none" id="fieldNovoCadastro" class="fields">
             <legend id="legendField" class="legends">Novo Cadastro</legend>
             <label for="">Insira um nome:  </label>
-            <input type="text" required id="txtNome" maxlength="35" placeholder="Insira um Nome" onkeypress="mascara(this,soLetras)">
+            <input type="text" required id="txtNome" maxlength="35" placeholder="Insira um Nome"  onkeypress="mascara(this,soLetras)">
             <label>Insira o CPF: </label>
             <input type="text" required id="cpf" maxlength="14" placeholder="Insira o CPF">
             <button type="submit" id="enviar" class="buttons">Salvar</button>
@@ -50,7 +51,6 @@
                 <img id="exibeImg" class="resizeImg">
             </div>
             <button id="fechaGridCadas" class="buttons">Fechar</button>
-            <!-- <button id="btnEditaImg" class="buttons">Editar Imagem</button> -->
     </div>
     </fieldset>
     <br><br>
