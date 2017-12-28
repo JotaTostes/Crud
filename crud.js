@@ -119,12 +119,10 @@ function buscaCadastro() {
         debugger;
         td = tr[i].getElementsByTagName("td")[0];
         if (td) {
-            if (RemoveAccents(td.innerHTML).toLowerCase().indexOf(filter) > -1) {
+            if (RemoveAccents(td.innerHTML).toLowerCase().indexOf(filter) > -1)
                 tr[i].style.display = "";
-            }
-            else {
+            else
                 tr[i].style.display = "none";
-            }
         }
     }
 }
@@ -133,7 +131,6 @@ function buscaCadastro() {
 $("#tabelaNomes").on("click", "button[data-remove]", function () {
     if (!confirm("Você deseja realmente excluir o registro?"))
         return;
-
     var tr = $(this).closest('tr'),
         id = tr.attr("data-id");
 
@@ -169,9 +166,9 @@ $("#tabelaNomes").on("click", "button[data-edit]", function () {
         $(":radio[name=status][value=" + obj.Status + "]").prop("checked", true);
     }
 
-    if (!obj) {
+    if (!obj)
         console.log("Cadastro nao encontrado para edição");
-    }
+
     $("#txtNome").val(obj.Nome);
     $("#cpf").val(obj.CPF);
     $("#exibeImg").show();
@@ -283,11 +280,10 @@ function RemoveAccents(strAccents) {
     var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
     var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
     for (var y = 0; y < strAccentsLen; y++) {
-        if (accents.indexOf(strAccents[y]) != -1) {
+        if (accents.indexOf(strAccents[y]) != -1)
             strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
-        } else {
+        else
             strAccentsOut[y] = strAccents[y];
-        }
     }
     strAccentsOut = strAccentsOut.join('');
     console.log(strAccentsOut);
@@ -329,15 +325,15 @@ document.onkeydown = function (e) {
         $("body").addClass('rotateX')
         setTimeout(function () {
             $("body").removeClass("rotateX");
-        }, 1000);
+        }, 500);
         return false;
-    }  
+    }
 
     if ((e.ctrlKey && e.which == 89) && (!$("body").hasClass("rotateY"))) {
         $("body").addClass('rotateY')
-        setTimeout(function () { 
+        setTimeout(function () {
             $("body").removeClass("rotateY");
-        }, 1000);
+        }, 500);
         return false;
     }
 
@@ -345,7 +341,7 @@ document.onkeydown = function (e) {
         $("body").addClass('rotateZ')
         setTimeout(function () {
             $("body").removeClass("rotateZ");
-        }, 1000);
+        }, 500);
         return false;
-    }   
+    }
 }

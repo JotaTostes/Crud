@@ -7,27 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="crud.css" rel="stylesheet">
+    <link rel="shortcut icon" href="Imagem/cadastrar2.ico" type="image/x-icon" />
     <script type="text/javascript" src="jquery-3.2.1.js"></script>
     <script type="text/javascript" src="shortcuts.js"></script>
 </head>
+
 <body>
 
     <!-- PESQUISA -->
     <fieldset id="fieldPrincip" class="fields">
         <legend class="legends">Pesquisa</legend>
-        <input type="text" id="txtBusca" placeholder="Pesquise um nome" required  onkeyup="buscaCadastro();" onkeypress="mascara(this,soLetras);">
+        <input type="text" id="txtBusca" placeholder="Pesquise um nome" required onkeyup="buscaCadastro();" onkeypress="mascara(this,soLetras);">
         <br>
         <input type="button" id="novoCadas" value="Novo Cadastro" class="buttons">
         <input type="button" id="limpaForm" value="Limpar Tudo" class="buttons">
     </fieldset>
-    <br><br>
+    <br>
+    <br>
 
     <!-- CADASTRO  -->
     <div>
         <fieldset style="display:none" id="fieldNovoCadastro" class="fields">
             <legend id="legendField" class="legends">Novo Cadastro</legend>
-            <label for="">Insira um nome:  </label>
-            <input type="text" required id="txtNome" maxlength="35" placeholder="Insira um Nome"  onkeypress="mascara(this,soLetras)">
+            <label for="">Insira um nome: </label>
+            <input type="text" required id="txtNome" maxlength="35" placeholder="Insira um Nome" onkeypress="mascara(this,soLetras)">
             <label>Insira o CPF: </label>
             <input type="text" required id="cpf" maxlength="14" placeholder="Insira o CPF">
             <button type="submit" id="enviar" class="buttons">Salvar</button>
@@ -36,16 +39,20 @@
                 <legend class="legends">Informações do Usuario</legend>
                 <div>
                     <label class="legends">Status do Usuario: </label>
-                    <input type="radio" name="status" value="1" id="radioAtivo" checked required><label for="radioAtivo">Ativo</label>
-                    <input type="radio" name="status" value="0" id="radioInativo" required><label for="radioInativo">Inativo</label><br>
+                    <input type="radio" name="status" value="1" id="radioAtivo" checked required>
+                    <label for="radioAtivo">Ativo</label>
+                    <input type="radio" name="status" value="0" id="radioInativo" required>
+                    <label for="radioInativo">Inativo</label>
+                    <br>
                     <label class="legends">Sexo: </label>
                     <select id="comboGenero" required>
-                      <option value="1">Homem</option>
-                      <option value="2">Mulher</option>
+                        <option value="1">Homem</option>
+                        <option value="2">Mulher</option>
                     </select>
                 </div>
             </fieldset>
-            <br><br>
+            <br>
+            <br>
             <input type="file" id="uplImg" accept="image/*" multiple/>
             <div id="divImg" class="item">
                 <img id="exibeImg" class="resizeImg">
@@ -53,8 +60,9 @@
             <button id="fechaGridCadas" class="buttons">Fechar</button>
     </div>
     </fieldset>
-    <br><br>
-    
+    <br>
+    <br>
+
     <!-- LISTA -->
     <fieldset id="fieldLista" class="fields">
         <legend id="legendPesquisa" class="legends">Lista de Cadastro</legend>
@@ -73,9 +81,3 @@
 </body>
 
 </html>
-
-<!-- 
-    arrumar editar img
-
-    retirar acentos da pesquisa
--->
