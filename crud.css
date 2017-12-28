@@ -73,19 +73,19 @@ table {
 
 @keyframes rotateX {
   0% {-webkit-transform: rotateX(0deg); }
-  50% {  }
+  50% {}
   100% {-webkit-transform: rotateX(360deg); }
 }
 
 @keyframes rotateY {
   0% {-webkit-transform: rotateY(0deg); }
-  50% {  }
+  50% {}
   100% {-webkit-transform: rotateY(360deg); }
 }
 
 @keyframes rotateZ {
   0% {-webkit-transform: rotateZ(0deg); }
-  50% {  }
+  50% {}
   100% {-webkit-transform: rotateZ(360deg); }
 }
 
@@ -100,4 +100,5 @@ table {
 .rotateZ {
   animation: rotateZ 1s linear;
 }
+
 

@@ -109,18 +109,17 @@ $("#uplImg").on('change', function () {
 function buscaCadastro() {
     // Variaveis 
     var td, i,
-
         txtBuscado = $("#txtBusca").val(),
-        filter = txtBuscado.toLowerCase(),
+        filter = RemoveAccents(txtBuscado).toLowerCase(),
         tabela = document.getElementById("tabelaNomes"),
         tr = tabela.getElementsByTagName("tr");
 
-
     // Faz um loop nas tr's da tabela e esconde as que nao batem com o filter
     for (i = 0; i < tr.length; i++) {
+        debugger;
         td = tr[i].getElementsByTagName("td")[0];
         if (td) {
-            if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
+            if (RemoveAccents(td.innerHTML).toLowerCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             }
             else {
@@ -222,7 +221,6 @@ $("#novoCadas").click(function () {
     $("#fieldNovoCadastro").slideDown(200);
 });
 
-
 // .val() pega o valor do combo
 //.text() pega o texto do combo
 
@@ -277,7 +275,7 @@ function soLetras(v) {
 // }
 
 
-
+// ------------------ FUNÇÃO PARA RETIRAR ACENTO ----------------------
 function RemoveAccents(strAccents) {
     var strAccents = strAccents.split('');
     var strAccentsOut = new Array();
@@ -296,7 +294,7 @@ function RemoveAccents(strAccents) {
     return strAccentsOut;
 }
 
-// --------------------- Adicionando shortcuts com biblioteca -------------------------
+// --------------------- USANDO BIBLIOTECA PARA ADICIONAR ATALHOS -------------------------
 // shortcut.add("Ctrl+X", function () {
 //     if (!$("body").hasClass("rotateX"))
 //         $("body").addClass("rotateX")
@@ -324,7 +322,7 @@ function RemoveAccents(strAccents) {
 //     }, 1000);
 // });
 
-// ------------------------ Adicionando shortcuts com javascript -----------------------------
+// ------------------------ ADICIONANDO ATALHOS COM JAVASCRIPT -----------------------------
 document.onkeydown = function (e) {
     var e = e || window.event;
     if ((e.ctrlKey && e.which == 88) && (!$("body").hasClass("rotateX"))) {
@@ -334,10 +332,10 @@ document.onkeydown = function (e) {
         }, 1000);
         return false;
     }  
-    
+
     if ((e.ctrlKey && e.which == 89) && (!$("body").hasClass("rotateY"))) {
         $("body").addClass('rotateY')
-        setTimeout(function () {
+        setTimeout(function () { 
             $("body").removeClass("rotateY");
         }, 1000);
         return false;
@@ -351,17 +349,3 @@ document.onkeydown = function (e) {
         return false;
     }   
 }
-
-// function removeAcentos(str) {
-//     var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-//     var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
-//     str = str.split('');
-//     var strLen = str.length;
-//     var i, x;''
-//     for (i = 0; i < strLen; i++) {
-//         if ((x = accents.indexOf(str[i])) != -1) {
-//             str[i] = accentsOut[x];
-//         }
-//     }       
-//     return str.join('');
-// }
