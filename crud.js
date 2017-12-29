@@ -116,7 +116,6 @@ function buscaCadastro() {
 
     // Faz um loop nas tr's da tabela e esconde as que nao batem com o filter
     for (i = 0; i < tr.length; i++) {
-        debugger;
         td = tr[i].getElementsByTagName("td")[0];
         if (td) {
             if (RemoveAccents(td.innerHTML).toLowerCase().indexOf(filter) > -1)
@@ -307,8 +306,8 @@ function RemoveAccents(strAccents) {
 //     setTimeout(function () {
 //         $("body").removeClass("rotateY");
 //     }, 1000);
-// });
 
+// });
 // shortcut.add("Ctrl+Z", function () {
 //     if (!$("body").hasClass("rotateZ"))
 //         $("body").addClass("rotateZ")
@@ -318,9 +317,10 @@ function RemoveAccents(strAccents) {
 //     }, 1000);
 // });
 
-// ------------------------ ADICIONANDO ATALHOS COM JAVASCRIPT -----------------------------
+// ------------------------ ADICIONANDO ATALHOS COM JAVASCRIPT ----------------------------- 
 document.onkeydown = function (e) {
     var e = e || window.event;
+
     if ((e.ctrlKey && e.which == 88) && (!$("body").hasClass("rotateX"))) {
         $("body").addClass('rotateX')
         setTimeout(function () {
@@ -344,4 +344,51 @@ document.onkeydown = function (e) {
         }, 500);
         return false;
     }
+}
+
+window.addEventListener("keydown", keysPressed, false);
+window.addEventListener("keyup", keysReleased, false);
+
+
+var tecla = [];
+
+function keysPressed(e) {
+    // guarda teclas pressionadas
+    tecla[e.keyCode] = true;
+
+    // Ctrl + X + Y
+    if ((tecla[17] && tecla[88] && tecla[89]) && (!$("body").hasClass("roda3dXY"))) {
+        $("body").addClass('roda3dXY')
+        setTimeout(function () {
+            $("body").removeClass("roda3dXY");
+        }, 500);
+    }
+
+    // Ctrl + X + Z
+    if ((tecla[17] && tecla[88] && tecla[90]) && (!$("body").hasClass("roda3dXZ"))) {
+        $("body").addClass('roda3dXZ')
+        setTimeout(function () {
+            $("body").removeClass("roda3dXZ");
+        }, 500);
+    }
+
+    // Ctrl + Y + Z
+    if ((tecla[17] && tecla[89] && tecla[90]) && (!$("body").hasClass("roda3dYZ"))) {
+        $("body").addClass('roda3dYZ')
+        setTimeout(function () {
+            $("body").removeClass("roda3dYZ");
+        }, 500);
+    }
+
+    // Ctrl + X + Y + Z
+    if ((tecla[17] && tecla[88] && tecla[89] && tecla[90]) && (!$("body").hasClass("roda3dXYZ"))) {
+        $("body").addClass('roda3dXYZ')
+        setTimeout(function () {
+            $("body").removeClass("roda3dXYZ");
+        }, 500);
+    }
+}
+
+function keysReleased(e) {
+    tecla[e.keyCode] = false;
 }
